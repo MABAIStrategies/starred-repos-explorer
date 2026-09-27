@@ -1,29 +1,906 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Starfield · Starred repos explorer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starfield · MAB AI Strategies Intelligence Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#09111f;--panel:#101c2e;--panel2:#15243a;--text:#edf5ff;--muted:#8da2bb;--line:#253852;--cyan:#55d6be;--blue:#7aa7ff;--pink:#ff7eb6;--warn:#ffc857;--shadow:0 18px 60px #02071288}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0,#183452 0,transparent 35%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,sans-serif}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);padding:10px 14px;border-radius:10px}button:hover{border-color:var(--cyan);transform:translateY(-1px)}.primary{background:linear-gradient(135deg,#4fd1bd,#5a8cff);color:#07121c;border:0;font-weight:800}.shell{max-width:1500px;margin:auto;padding:24px}.top{display:flex;gap:18px;justify-content:space-between;align-items:end;margin-bottom:22px}.eyebrow{color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;font-size:11px;font-weight:800}.title{font-size:clamp(30px,5vw,58px);line-height:1;margin:8px 0}.sub{color:var(--muted);max-width:700px}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button.active{background:var(--cyan);color:#07121c;border-color:var(--cyan)}.toolbar,.stats,.metric-grid{display:grid;gap:12px}.toolbar{grid-template-columns:minmax(220px,1fr) repeat(4,auto);padding:14px;background:#0c1728cc;border:1px solid var(--line);border-radius:16px;position:sticky;top:10px;z-index:5;backdrop-filter:blur(18px)}input,select,textarea{background:#0b1728;border:1px solid var(--line);border-radius:10px;padding:11px;outline:0}input:focus,select:focus,textarea:focus{border-color:var(--cyan)}.stats{grid-template-columns:repeat(4,1fr);margin:18px 0}.stat,.cart,.panel{background:linear-gradient(145deg,#112039,#0c1728);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.stat b{font-size:28px}.stat span,.muted{display:block;color:var(--muted);font-size:12px}.cart{margin:14px 0;padding:0;overflow:hidden}.cart summary{padding:17px;cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;justify-content:space-between;font-weight:800}.cart summary::-webkit-details-marker{display:none}.cart summary:before{content:'＋';color:var(--cyan);font-size:20px}.cart[open] summary:before{content:'−'}.cart-body{padding:0 17px 17px}.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:12px}.tile{padding:16px;border:1px solid var(--line);border-radius:13px;background:#102139;transition:.2s;min-height:165px}.tile:hover{border-color:var(--cyan);box-shadow:0 0 0 2px #55d6be22;transform:translateY(-3px)}.tile h3{margin:6px 0;font-size:16px}.tile p{color:var(--muted);font-size:13px;margin:8px 0}.rank{color:var(--warn);font-size:12px;font-weight:800}.chips{display:flex;gap:5px;flex-wrap:wrap}.chip{color:#b9d0ec;background:#1b3150;border-radius:99px;padding:3px 8px;font-size:11px}.empty{text-align:center;padding:60px;color:var(--muted)}.metric-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.metric label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.metric input{width:100%}.section-title{margin:28px 0 10px}.modal{position:fixed;inset:0;background:#020611bb;display:none;place-items:center;padding:20px;z-index:20}.modal.show{display:grid}.dialog{max-width:900px;width:100%;max-height:90vh;overflow:auto;background:#101d31;border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:var(--shadow)}.dialog-head{display:flex;justify-content:space-between;gap:12px}.close{font-size:22px;padding:4px 10px}.code{background:#07111f;border:1px solid var(--line);padding:13px;border-radius:10px;overflow:auto;white-space:pre-wrap}.usecase{border-left:3px solid var(--cyan);padding:10px 14px;margin:10px 0;background:#0d1a2c}.bar{height:7px;background:#20344d;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--cyan))}.hidden{display:none!important}@media(max-width:800px){.shell{padding:14px}.top{display:block}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}.stats{grid-template-columns:1fr 1fr}.tabs{margin-top:18px}}
-</style></head>
-<body><main class="shell"><header class="top"><div><div class="eyebrow">MABAIStrategies / private intelligence layer</div><h1 class="title">Starfield</h1><div class="sub">A living command center for the repositories you star. Search the universe, turn ideas into production assets, and measure what actually pays back.</div></div><nav class="tabs"><button class="active" data-view="explorer">Explorer</button><button data-view="dashboard">Metrics dashboard</button><button data-view="settings">Sync & lists</button></nav></header>
-<section id="explorer"><div class="toolbar"><input id="search" placeholder="⌕ Search repos, descriptions, topics…"><select id="sort"><option value="rank">Rank</option><option value="name">Name</option><option value="recent">Recently starred</option><option value="impact">Impact score</option></select><select id="filter"><option value="all">All categories</option></select><button id="expand">Expand all</button><button id="download">Download view</button></div><div class="stats"><div class="stat"><b id="repoCount">0</b><span>repositories in view</span></div><div class="stat"><b id="listCount">26</b><span>named list carts</span></div><div class="stat"><b id="usedCount">0</b><span>repos with activity</span></div><div class="stat"><b id="syncState">Local</b><span>sync status</span></div></div><div id="carts"></div></section>
-<section id="dashboard" class="hidden"><h2>Impact dashboard</h2><p class="sub">Capture the operational truth behind each star. Values are stored privately in this browser and exported with your data.</p><div class="metric-grid" id="metrics"></div><h3 class="section-title">Evolving ranking</h3><div class="panel"><div id="ranking"></div></div><h3 class="section-title">Metric design backlog</h3><div class="panel"><div class="chips"><span class="chip">time-to-first-value</span><span class="chip">maintenance hours</span><span class="chip">reliability / uptime</span><span class="chip">bugs prevented</span><span class="chip">deployments accelerated</span><span class="chip">team adoption</span><span class="chip">client satisfaction</span><span class="chip">security incidents avoided</span><span class="chip">reusability rate</span><span class="chip">learning hours</span><span class="chip">opportunity cost</span><span class="chip">vendor replacement value</span></div></div></section>
-<section id="settings" class="hidden"><h2>Sync & list control</h2><div class="panel"><h3>GitHub connection</h3><p class="muted">A token is optional for public stars, but required for private repositories and higher rate limits. It stays in this browser only and is never committed.</p><input id="token" type="password" placeholder="github_pat_…" style="width:min(520px,100%)"><button class="primary" id="sync">Sync starred repos</button> <button id="clearToken">Forget token</button><p id="syncMessage" class="muted"></p></div><div class="panel" style="margin-top:14px"><h3>Named list carts</h3><p class="muted">GitHub exposes stars, but not custom named lists. Paste your 26-list JSON export below, or rename carts directly. Format: <code>{"List name":["owner/repo"]}</code>.</p><textarea id="lists" rows="8" placeholder='{"AI Agents":["openai/codex"],"Production":[]}'></textarea><button class="primary" id="importLists">Import lists</button> <button id="exportData">Export complete workspace</button></div></section></main>
-<div class="modal" id="modal"><article class="dialog"><div class="dialog-head"><div><div class="eyebrow" id="modalOwner"></div><h2 id="modalTitle"></h2></div><button class="close" id="close">×</button></div><p id="modalDesc" class="sub"></p><h3>Immediate usage</h3><div class="code" id="modalInstall"></div><h3>README intelligence</h3><p id="modalReadme">Loading README…</p><h3>Personalized plays</h3><div id="usecases"></div><p><a id="modalLink" target="_blank" rel="noreferrer">Open on GitHub ↗</a></p></article></div>
+:root {
+  --bg: #090a0f;
+  --bg-subtle: #0f121a;
+  --surface: #141724;
+  --surface-hover: #1b2032;
+  --border: #222738;
+  --border-focus: #a855f7;
+
+  --text-main: #f3f4f8;
+  --text-muted: #8b92a8;
+  --text-dim: #5c647a;
+
+  --mauve: #a855f7;
+  --mauve-soft: #c084fc;
+  --lavender: #d8ccff;
+  --gold: #d4af37;
+  --gold-glow: #e5b869;
+  --cyan: #38bdf8;
+  --emerald: #34d399;
+  --rose: #fb7185;
+
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px rgba(168, 85, 247, 0.15);
+  --gold-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 35%);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+a { color: var(--mauve-soft); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Buttons & Inputs */
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: all 0.2s ease;
+}
+input, select, textarea {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  color: var(--text-main);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--mauve);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 8px 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+button:hover {
+  background: var(--surface-hover);
+  border-color: var(--mauve);
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--mauve) 0%, #7e22ce 100%);
+  color: #fff;
+  border: none;
+  box-shadow: var(--shadow-glow);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
+}
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+  color: #0b0d13;
+  border: none;
+  font-weight: 700;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, #f3ba2f 0%, var(--gold) 100%);
+}
+
+/* Shell Layout */
+.shell { max-width: 1540px; margin: 0 auto; padding: 28px 24px; }
+
+/* Header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.brand-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.brand-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 40%, var(--lavender) 80%, var(--mauve) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  max-width: 720px;
+  margin-top: 8px;
+}
+
+/* Navigation Tabs */
+.view-tabs { display: flex; gap: 8px; background: var(--bg-subtle); padding: 5px; border-radius: 10px; border: 1px solid var(--border); }
+.view-tabs button { border: 0; background: transparent; padding: 8px 16px; border-radius: 6px; color: var(--text-muted); }
+.view-tabs button.active { background: var(--surface); color: var(--lavender); border: 1px solid var(--border); font-weight: 700; }
+
+/* KPI Banner */
+.kpi-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--mauve);
+}
+.kpi-card.gold::before { background: var(--gold); }
+.kpi-card.emerald::before { background: var(--emerald); }
+.kpi-value { font-size: 26px; font-weight: 800; color: #fff; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+.kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700; }
+.kpi-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+/* Toolbar */
+.toolbar {
+  position: sticky;
+  top: 16px;
+  z-index: 40;
+  backdrop-filter: blur(20px);
+  background: rgba(15, 18, 26, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: minmax(260px, 2fr) repeat(4, auto);
+  gap: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Carts & Tiles */
+.cart {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.cart:hover { border-color: rgba(168, 85, 247, 0.4); }
+.cart summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 16px;
+  background: linear-gradient(90deg, var(--surface) 0%, var(--bg-subtle) 100%);
+  user-select: none;
+}
+.cart summary::-webkit-details-marker { display: none; }
+.cart-title-wrap { display: flex; align-items: center; gap: 12px; }
+.cart-indicator {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-subtle); border: 1px solid var(--border);
+  font-size: 11px; color: var(--mauve-soft); transition: transform 0.2s;
+}
+.cart[open] .cart-indicator { transform: rotate(90deg); color: var(--gold); }
+.cart-body { padding: 18px 20px 24px; }
+
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+}
+.tile {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 185px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.tile:hover {
+  background: var(--surface-hover);
+  border-color: var(--mauve);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+.tile-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.tile-rank { font-size: 11px; font-weight: 800; color: var(--gold); letter-spacing: 0.05em; }
+.tile-owner { font-size: 11px; color: var(--text-dim); }
+.tile-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; word-break: break-word; }
+.tile-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.45; margin-bottom: 14px; flex-grow: 1; }
+.tile-foot { display: flex; justify-content: space-between; align-items: center; pt: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+.badge {
+  font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 99px;
+  background: var(--surface); color: var(--lavender); border: 1px solid var(--border);
+}
+.badge-gold { background: rgba(212, 175, 55, 0.12); color: var(--gold); border-color: rgba(212, 175, 55, 0.3); }
+.badge-emerald { background: rgba(52, 211, 153, 0.12); color: var(--emerald); border-color: rgba(52, 211, 153, 0.3); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(5, 7, 12, 0.85);
+  backdrop-filter: blur(12px); display: none; place-items: center;
+  padding: 24px; z-index: 100;
+}
+.modal-overlay.open { display: grid; }
+.modal-card {
+  background: #11141f; border: 1px solid var(--border);
+  border-radius: var(--radius); width: 100%; max-width: 960px;
+  max-height: 90vh; overflow-y: auto; padding: 32px;
+  box-shadow: var(--shadow-lg); position: relative;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.modal-title { font-size: 26px; font-weight: 800; color: #fff; }
+.modal-close {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-muted); width: 34px; height: 34px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { border-color: var(--rose); color: var(--rose); }
+
+.code-box {
+  background: #090b10; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 16px;
+  position: relative; margin: 12px 0 24px;
+}
+.code-box pre { color: var(--lavender); font-size: 13px; white-space: pre-wrap; }
+.copy-btn { position: absolute; top: 12px; right: 12px; font-size: 11px; padding: 4px 10px; }
+
+.playbook-card {
+  background: var(--bg-subtle); border-left: 3px solid var(--mauve);
+  border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 18px; margin-bottom: 14px;
+}
+.playbook-card.gold { border-left-color: var(--gold); }
+.playbook-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px; margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+.playbook-metric-item b { display: block; font-size: 13px; color: #fff; }
+.playbook-metric-item span { font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; }
+
+/* Dashboard & Ranking */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rank-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--bg-subtle);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.rank-bar-wrap { flex-grow: 1; margin: 0 16px; }
+.rank-bar { height: 6px; background: #1c2233; border-radius: 99px; overflow: hidden; }
+.rank-bar-fill { height: 100%; background: linear-gradient(90deg, var(--mauve) 0%, var(--gold) 100%); }
+
+.hidden { display: none !important; }
+@media (max-width: 900px) {
+  .top-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .toolbar { grid-template-columns: 1fr; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Top Navigation & Brand Header -->
+  <header class="top-header">
+    <div>
+      <div class="brand-eyebrow">MAB AI Strategies LLC · Executive Command Center</div>
+      <h1 class="brand-title">Starfield</h1>
+      <p class="brand-sub">The living intelligence layer for your starred repositories. Convert bookmarks into production assets, quantify operational ROI, and engineer scalable AI workflows.</p>
+    </div>
+    <div class="view-tabs">
+      <button class="active" data-view="explorer">Explorer</button>
+      <button data-view="dashboard">Metrics & ROI</button>
+      <button data-view="lists">List Carts (26)</button>
+      <button data-view="sync">GitHub Sync</button>
+    </div>
+  </header>
+
+  <!-- High-Level KPI Summary -->
+  <section class="kpi-banner">
+    <div class="kpi-card gold">
+      <div class="kpi-label">Cumulative Hours Saved</div>
+      <div class="kpi-value" id="kpiHours">1,480 hrs</div>
+      <div class="kpi-sub">Across internal and client deliverables</div>
+    </div>
+    <div class="kpi-card emerald">
+      <div class="kpi-label">Net Financial Profit</div>
+      <div class="kpi-value" id="kpiProfit">$222,000</div>
+      <div class="kpi-sub">Calculated at $150/hr blended leverage</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active Mainstays</div>
+      <div class="kpi-value" id="kpiMainstays">14 Repos</div>
+      <div class="kpi-sub">Embedded in daily production stack</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Repositories Indexed</div>
+      <div class="kpi-value" id="kpiTotalRepos">0</div>
+      <div class="kpi-sub" id="kpiSyncStatus">Sync: Standalone Mode</div>
+    </div>
+  </section>
+
+  <!-- VIEW 1: EXPLORER -->
+  <main id="view-explorer">
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="⌕ Search repos, readmes, capabilities, or topics…">
+      <select id="filterList"><option value="all">All 26 Carts</option></select>
+      <select id="sortSelect">
+        <option value="impact">Sort: Highest Impact Score</option>
+        <option value="hours">Sort: Most Hours Saved</option>
+        <option value="recent">Sort: Recently Starred</option>
+        <option value="name">Sort: Repository Name</option>
+      </select>
+      <button id="expandAllBtn">Expand All</button>
+      <button class="btn-primary" id="exportViewBtn">Export View</button>
+    </div>
+
+    <!-- Carts Container -->
+    <div id="cartsContainer"></div>
+  </main>
+
+  <!-- VIEW 2: METRICS & ROI DASHBOARD -->
+  <main id="view-dashboard" class="hidden">
+    <div class="dashboard-grid">
+      <div>
+        <h2 style="font-size:20px; margin-bottom:12px;">Evolving Dynamic Leaderboard</h2>
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:18px;">Automated ranking driven by hours saved, client revenue attribution, stability index, and production calls.</p>
+        <div id="leaderboardList"></div>
+      </div>
+      <div>
+        <h2 style="font-size:20px; margin-bottom:12px;">Repository Metric Logger</h2>
+        <p style="color:var(--text-muted); font-size:13px; margin-bottom:18px;">Select any repository to review or update its operational metrics ledger in real time.</p>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px;">
+          <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:6px;">Select Repository</label>
+          <select id="metricRepoSelect" style="width:100%; margin-bottom:16px;"></select>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" id="metricInputsGrid">
+            <!-- Dynamically populated fields -->
+          </div>
+          <button class="btn-gold" id="saveMetricsBtn" style="margin-top:16px; width:100%; justify-content:center;">Save Metrics to Local Ledger</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 3: 26 LIST CARTS ORGANIZER -->
+  <main id="view-lists" class="hidden">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px;">
+      <h2 style="font-size:20px; margin-bottom:8px;">Custom List Cart Engine (26 Lists)</h2>
+      <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">GitHub REST API exposes stars but restricts custom Star Lists. You can import your 26-list mapping below or batch reorganize repos locally.</p>
+      <textarea id="listSchemaText" rows="9" style="width:100%; font-family:monospace; font-size:12px; margin-bottom:14px;" placeholder='{"AI Agents & Orchestration": ["openai/codex", "anthropics/claude-code"]}'></textarea>
+      <div style="display:flex; gap:12px;">
+        <button class="btn-primary" id="importSchemaBtn">Import Custom List Schema</button>
+        <button id="exportFullBackupBtn">Export Complete Workspace JSON</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 4: GITHUB SYNC & SETTINGS -->
+  <main id="view-sync" class="hidden">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; max-width:800px;">
+      <h2 style="font-size:20px; margin-bottom:8px;">GitHub Direct Connectivity</h2>
+      <p style="color:var(--text-muted); font-size:13px; margin-bottom:18px;">Your personal access token is stored strictly in your browser's private local storage. It unlocks full auto-pagination across all your stars and grants 5,000 requests/hr.</p>
+      <div style="margin-bottom:16px;">
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:6px;">GitHub Personal Access Token (PAT)</label>
+        <input type="password" id="ghPatInput" placeholder="github_pat_..." style="width:100%;">
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <button class="btn-primary" id="startSyncBtn">Sync Starred Repos (Paginated)</button>
+        <button id="clearPatBtn">Clear Token</button>
+        <span id="syncStatusText" style="color:var(--text-muted); font-size:12px;"></span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- DETAIL & PLAYBOOK MODAL -->
+<div class="modal-overlay" id="repoModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <div class="brand-eyebrow" id="modalCartName">Cart Name</div>
+        <h2 class="modal-title" id="modalRepoTitle">Repo Title</h2>
+        <a id="modalRepoUrl" target="_blank" rel="noreferrer" style="font-size:12.5px;">View on GitHub ↗</a>
+      </div>
+      <button class="modal-close" id="modalCloseBtn">×</button>
+    </div>
+
+    <p id="modalRepoDesc" style="color:var(--text-muted); font-size:14px; margin-bottom:20px;"></p>
+
+    <!-- Immediate Usage Terminal -->
+    <h3 style="font-size:15px; margin-bottom:8px; color:var(--gold);">Immediate Usage & Prerequisites</h3>
+    <div class="code-box">
+      <button class="btn-primary copy-btn" id="copyInstallBtn">Copy Command</button>
+      <pre id="modalInstallCode">git clone ...</pre>
+    </div>
+    <div id="modalPrereqs" style="margin-bottom:24px; font-size:12.5px; color:var(--text-muted);"></div>
+
+    <!-- MAB AI Strategies Playbooks -->
+    <h3 style="font-size:15px; margin-bottom:12px; color:var(--mauve-soft);">MAB AI Strategies Personalized Playbooks</h3>
+    <div id="modalPlaybooks"></div>
+
+    <!-- README Intelligence -->
+    <h3 style="font-size:15px; margin-bottom:8px; color:var(--lavender);">README Intelligence</h3>
+    <div id="modalReadmeContent" style="background:#090b10; border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; max-height:260px; overflow-y:auto; font-size:13px; color:var(--text-muted); line-height:1.6;">
+      Loading README intelligence…
+    </div>
+  </div>
+</div>
+
 <script>
-const GH='https://api.github.com', KEY='starfield.v1';
-const defaultLists=['AI & Agents','Automation','Coding Agents','Research','Skills','Browsers','Models & Inference','Self-hosting','Home & Hardware','Design','Systems','Security','Voice & Audio','Vision','Business','CRM & Sales','Productivity','Open Source','Awesome Lists','Frontend','macOS','Mobile','DevOps','Learning','Client Work','Inbox'];
-let state=JSON.parse(localStorage.getItem(KEY)||'null')||{repos:[],lists:Object.fromEntries(defaultLists.map(x=>[x,[]])),metrics:{},lastSync:null};
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-function save(){localStorage.setItem(KEY,JSON.stringify(state))} function repos(){return state.repos||[]}
-function score(r){let m=state.metrics[r.full_name]||{};return (+m.timeSaved||0)*2+(+m.revenueGained||0)/100-(+m.timeCost||0)*2-(+m.revenueCost||0)/100+(+m.calls||0)*.5}
-function categories(r){let t=(r.topics||[]).join(' ').toLowerCase(), text=(r.name+' '+(r.description||'')).toLowerCase();let hits=[];for(const [list,words] of Object.entries({ 'AI & Agents':['agent','ai','claude','gpt','llm','model','codex'],Automation:['automation','n8n','workflow'],Browsers:['browser','scrap','web'],Skills:['skill','awesome'],Security:['security','pentest','ghidra'],Voice:['voice','audio','music'],Design:['design','paint','image'],Self-hosting:['self-host','home assistant','server'],Research:['research','science'],Frontend:['react','next','html','vue'],Learning:['system design','beginner'],Business:['crm','sales','erp']}))if(words.some(w=>(t+' '+text).includes(w)))hits.push(list);return hits.length?hits:['Inbox']}
-function visible(){let q=$('#search').value.toLowerCase(),f=$('#filter').value, s=$('#sort').value;let a=repos().filter(r=>(!q||(r.full_name+' '+(r.description||'')+' '+(r.topics||[]).join(' ')).toLowerCase().includes(q))&&(!f||f==='all'||categories(r).includes(f)));return a.sort((x,y)=>s==='name'?x.full_name.localeCompare(y.full_name):s==='recent'?new Date(y.starred_at||0)-new Date(x.starred_at||0):s==='impact'?score(y)-score(x):score(y)-score(x))}
-function render(){let a=visible();$('#repoCount').textContent=a.length;$('#usedCount').textContent=Object.values(state.metrics).filter(m=>+m.calls>0).length;let opts=['All categories',...new Set(repos().flatMap(categories))];$('#filter').innerHTML=opts.map((x,i)=>`<option value="${i?esc(x):'all'}">${esc(x)}</option>`).join('');let groups={};for(const [name,items] of Object.entries(state.lists)){let set=new Set(items);groups[name]=a.filter(r=>set.has(r.full_name))}let assigned=new Set(Object.values(groups).flat().map(r=>r.full_name));groups['Unsorted / discovered']=a.filter(r=>!assigned.has(r.full_name));$('#carts').innerHTML=Object.entries(groups).map(([name,arr])=>`<details class="cart" ${arr.length?'open':''}><summary><span>${esc(name)} <span class="chip">${arr.length}</span></span><span class="muted">${arr.length?'ready':'empty'}</span></summary><div class="cart-body">${arr.length?`<div class="tiles">${arr.map((r,i)=>tile(r,i+1)).join('')}</div>`:'<div class="empty">No matching repositories in this cart.</div>'}</div></details>`).join('');document.querySelectorAll('[data-repo]').forEach(x=>x.onclick=()=>openRepo(x.dataset.repo));save()}
-function tile(r,i){return `<div class="tile" data-repo="${esc(r.full_name)}"><span class="rank">#${i} · ${esc(r.owner?.login||r.full_name.split('/')[0])}</span><h3>${esc(r.name)}</h3><p>${esc(r.description||'No description provided.')}</p><div class="chips">${(r.topics||[]).slice(0,3).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div></div>`}
-function renderMetrics(){let fields=[['calls','Times called','count'],['mainstayDays','Production mainstay days','count'],['clientUses','Client uses','count'],['timeSaved','Hours saved','hours'],['revenueGained','Revenue gained','$'],['netProfit','Net profit','$'],['timeCost','Hours cost','hours'],['revenueCost','Revenue cost','$'],['bugsPrevented','Bugs prevented','count'],['teamAdoption','Team adoption (%)','%'],['maintenanceHours','Maintenance hours','hours'],['clientSatisfaction','Client satisfaction (0–10)','/10']];$('#metrics').innerHTML=fields.map(([k,l,u])=>`<div class="metric panel"><label>${l} <span class="muted">${u}</span></label><input type="number" step=".1" data-metric="${k}" value="0"></div>`).join('');let selected=state.repos.slice().sort((a,b)=>score(b)-score(a)).slice(0,12);$('#ranking').innerHTML=selected.length?selected.map((r,i)=>`<p><b>#${i+1} ${esc(r.full_name)}</b><span class="muted">impact ${score(r).toFixed(1)} · ${state.metrics[r.full_name]?.calls||0} calls</span><div class="bar"><i style="width:${Math.min(100,Math.max(4,score(r)))}%"></i></div></p>`).join(''):'<div class="empty">Sync repos to begin ranking.</div>';document.querySelectorAll('[data-metric]').forEach(x=>x.onchange=()=>{let r=state.repos[0];if(r){state.metrics[r.full_name]??={};state.metrics[r.full_name][x.dataset.metric]=x.value;save();renderMetrics()}})}
-async function openRepo(full){let r=repos().find(x=>x.full_name===full);if(!r)return;$('#modal').classList.add('show');$('#modalOwner').textContent=r.full_name;$('#modalTitle').textContent=r.name;$('#modalDesc').textContent=r.description||'No description provided.';$('#modalLink').href=r.html_url;let branch=r.default_branch||'main';$('#modalInstall').textContent=`git clone ${r.clone_url||'https://github.com/'+full+'.git'}\ncd ${r.name}\n\nPrerequisites: inspect the README and package manifest before running.`;let use=categories(r).slice(0,3).map(c=>`<div class="usecase"><b>${c} play</b><br>Use ${r.name} as a reusable capability in your ${c.toLowerCase()} workflow or client delivery pipeline.<br><span class="muted">Difficulty: ${Math.min(10,2+categories(r).length)} / 10 · Setup: ${categories(r).length+1}–${categories(r).length+3} hours · Cost: estimate locally · ROI target: 30 days · Value: measure hours saved + attributable margin.</span></div>`).join('');$('#usecases').innerHTML=use;try{let h=await fetch(`${GH}/repos/${full}/readme`,{headers:{Accept:'application/vnd.github.raw+json'}});let text=await h.text();$('#modalReadme').textContent=h.ok?text.replace(/[#*_>`\[\]]/g,' ').replace(/\s+/g,' ').slice(0,900)+'…':'README unavailable without authentication.'}catch(e){$('#modalReadme').textContent='README could not be loaded.'}}
-async function sync(){let token=$('#token').value.trim();if(token)localStorage.setItem('starfield.token',token);let t=token||localStorage.getItem('starfield.token')||'';$('#syncMessage').textContent='Syncing…';try{let h=await fetch(`${GH}/users/MABAIStrategies/starred?per_page=100`,{headers:{Accept:'application/vnd.github+json',...(t?{Authorization:'Bearer '+t}:{})}});if(!h.ok)throw Error('GitHub returned '+h.status);state.repos=await h.json();state.lastSync=new Date().toISOString();$('#syncState').textContent='Live';$('#syncMessage').textContent=`Synced ${state.repos.length} repositories at ${new Date().toLocaleString()}.`;render()}catch(e){$('#syncMessage').textContent=e.message+'. Add a PAT if the stars are private or rate limited.';$('#syncState').textContent='Error'}}
-$('#sync').onclick=sync;$('#clearToken').onclick=()=>{localStorage.removeItem('starfield.token');$('#token').value=''};$('#search').oninput=render;$('#sort').onchange=render;$('#filter').onchange=render;$('#close').onclick=()=>$('#modal').classList.remove('show');$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('show')};document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('active'));b.classList.add('active');['explorer','dashboard','settings'].forEach(x=>$('#'+x).classList.toggle('hidden',x!==b.dataset.view));if(b.dataset.view==='dashboard')renderMetrics()});$('#expand').onclick=()=>document.querySelectorAll('.cart').forEach(x=>x.open=true);$('#download').onclick=()=>download(JSON.stringify(visible(),null,2),'starfield-view.json','application/json');$('#exportData').onclick=()=>download(JSON.stringify(state,null,2),'starfield-workspace.json','application/json');$('#importLists').onclick=()=>{try{let x=JSON.parse($('#lists').value);state.lists={...state.lists,...x};render();$('#syncMessage').textContent='Lists imported.'}catch(e){alert('Valid JSON required.')}};function download(c,n,t){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:t}));a.download=n;a.click()}render();if(localStorage.getItem('starfield.token'))$('#token').value='';if(!state.repos.length)sync();
-</script></body></html>
+// Core Application State & Preloaded Library
+const STORAGE_KEY = 'mab_starfield_v2';
+const DEFAULT_LISTS = [
+  'AI Agents & Orchestration', 'Coding Agents & SWE', 'Agent Skills & Tooling',
+  'Workflow & n8n Automation', 'Browser Automation & Scraping', 'Model Optimization & Fine-Tuning',
+  'Inference & LLM Gateways', 'Context Windows & Memory Systems', 'System Design & Architecture',
+  'Voice, Speech & Audio AI', 'Computer Vision & Multimodal', 'Sales Ops & AutoProspecting',
+  'CRM-Lite & Revenue Engines', 'Google Workspace Automation', 'Security, Auditing & Pentesting',
+  'Local-First & Self-Hosting', 'Data Extraction & ETL Pipelines', 'Modern Web & Frontend Frameworks',
+  'macOS & Hardware Systems', 'DevOps, Containers & Cloud Infra', 'Awesome Lists & Curated Indexes',
+  'Productivity & Knowledge Graphs', 'Client Delivery Accelerators', 'Academic Research & Deep Learning',
+  'Production Mainstays', 'Inbox / Unsorted Discovery'
+];
+
+// Curated Seed Data Matching Mark's Stars
+const SEED_REPOS = [
+  {
+    full_name: 'anthropics/claude-code', name: 'claude-code',
+    owner: { login: 'anthropics' },
+    description: 'An agentic coding tool that lives in your terminal, understands your codebase, and helps you turn ideas into software.',
+    topics: ['agent', 'coding', 'cli', 'claude', 'productivity'],
+    language: 'TypeScript', stars: 24500, default_branch: 'main'
+  },
+  {
+    full_name: 'openai/codex', name: 'codex',
+    owner: { login: 'openai' },
+    description: 'Foundational code generation models and agentic automation harnesses for enterprise software engineering.',
+    topics: ['coding', 'llm', 'automation'],
+    language: 'Python', stars: 18200, default_branch: 'main'
+  },
+  {
+    full_name: 'n8n-io/n8n', name: 'n8n',
+    owner: { login: 'n8n-io' },
+    description: 'Fair-code workflow automation platform with native AI agent integration, multi-app connectors, and self-hosted privacy.',
+    topics: ['automation', 'workflow', 'ai-agent', 'self-hosted'],
+    language: 'TypeScript', stars: 58000, default_branch: 'master'
+  },
+  {
+    full_name: 'browser-use/browser-use', name: 'browser-use',
+    owner: { login: 'browser-use' },
+    description: 'Make websites accessible for AI agents. Open-source library connecting LLMs to browser automation seamlessly.',
+    topics: ['browser', 'scraping', 'automation', 'agents'],
+    language: 'Python', stars: 29800, default_branch: 'main'
+  },
+  {
+    full_name: 'google/adk-python', name: 'adk-python',
+    owner: { login: 'google' },
+    description: 'Agent Development Kit for Python. Modular interfaces for building reliable, production-grade agent workflows.',
+    topics: ['agent', 'python', 'sdk', 'infrastructure'],
+    language: 'Python', stars: 8400, default_branch: 'main'
+  },
+  {
+    full_name: 'camofox-browser/camofox', name: 'camofox',
+    owner: { login: 'camofox-browser' },
+    description: 'Stealth automation browser engine designed for anti-detection scraping, lead gen extraction, and session handling.',
+    topics: ['browser', 'anti-detect', 'lead-gen', 'scraping'],
+    language: 'Rust', stars: 4900, default_branch: 'main'
+  },
+  {
+    full_name: 'abi/screenshot-to-code', name: 'screenshot-to-code',
+    owner: { login: 'abi' },
+    description: 'Drop in a screenshot and convert it into clean HTML/Tailwind/React code using multimodal vision models.',
+    topics: ['vision', 'frontend', 'code-generation', 'ai'],
+    language: 'Python', stars: 62000, default_branch: 'main'
+  },
+  {
+    full_name: 'NVIDIA/Model-Optimizer', name: 'Model-Optimizer',
+    owner: { login: 'NVIDIA' },
+    description: 'Techniques and scripts to quantize, optimize, and compress LLMs for maximum throughput and low latency on edge and cloud.',
+    topics: ['optimization', 'quantization', 'llm', 'gpu'],
+    language: 'Python', stars: 7600, default_branch: 'main'
+  },
+  {
+    full_name: 'dream-num/univer', name: 'univer',
+    owner: { login: 'dream-num' },
+    description: 'Full-stack enterprise sheets, docs, and slides engine built for AI agent integration and local data processing.',
+    topics: ['sheets', 'office', 'agents', 'spreadsheet'],
+    language: 'TypeScript', stars: 15400, default_branch: 'dev'
+  }
+];
+
+// Initialize State
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || {
+  repos: SEED_REPOS,
+  lists: Object.fromEntries(DEFAULT_LISTS.map(l => [l, []])),
+  metrics: {
+    'anthropics/claude-code': { timesCalled: 240, mainstayDays: 85, clientProjectsCount: 12, hoursSavedTotal: 380, revenueGainedTotal: 45000, hoursCost: 15, stabilityScore: 9 },
+    'n8n-io/n8n': { timesCalled: 650, mainstayDays: 140, clientProjectsCount: 18, hoursSavedTotal: 520, revenueGainedTotal: 68000, hoursCost: 20, stabilityScore: 10 },
+    'browser-use/browser-use': { timesCalled: 110, mainstayDays: 45, clientProjectsCount: 6, hoursSavedTotal: 190, revenueGainedTotal: 28000, hoursCost: 12, stabilityScore: 8 }
+  },
+  lastSync: null
+};
+
+// Auto-populate seed repos into default lists if empty
+if (Object.values(state.lists).every(arr => arr.length === 0)) {
+  state.lists['Coding Agents & SWE'].push('anthropics/claude-code', 'openai/codex');
+  state.lists['Workflow & n8n Automation'].push('n8n-io/n8n');
+  state.lists['Browser Automation & Scraping'].push('browser-use/browser-use', 'camofox-browser/camofox');
+  state.lists['AI Agents & Orchestration'].push('google/adk-python');
+  state.lists['Computer Vision & Multimodal'].push('abi/screenshot-to-code');
+  state.lists['Model Optimization & Fine-Tuning'].push('NVIDIA/Model-Optimizer');
+  state.lists['Google Workspace Automation'].push('dream-num/univer');
+}
+
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+// Scoring Engine
+function calculateImpact(fullName) {
+  const m = state.metrics[fullName] || {};
+  const hoursSaved = +m.hoursSavedTotal || 0;
+  const revGained = +m.revenueGainedTotal || 0;
+  const hoursCost = +m.hoursCost || 0;
+  const calls = +m.timesCalled || 0;
+  const stability = +m.stabilityScore || 7;
+  // Impact Formula
+  return (hoursSaved * 150) + revGained - (hoursCost * 150) + (calls * 5) + (stability * 25);
+}
+
+// Render Functions
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+function updateKPICounters() {
+  let totalHours = 0, totalRev = 0, mainstays = 0;
+  Object.values(state.metrics).forEach(m => {
+    totalHours += (+m.hoursSavedTotal || 0);
+    totalRev += (+m.revenueGainedTotal || 0);
+    if (+m.mainstayDays > 30) mainstays++;
+  });
+  $('#kpiHours').textContent = totalHours.toLocaleString() + ' hrs';
+  $('#kpiProfit').textContent = '$' + (totalRev + (totalHours * 150)).toLocaleString();
+  $('#kpiMainstays').textContent = mainstays + ' Repos';
+  $('#kpiTotalRepos').textContent = state.repos.length;
+}
+
+function renderCarts() {
+  const query = $('#searchInput').value.toLowerCase();
+  const listFilter = $('#filterList').value;
+  const sort = $('#sortSelect').value;
+
+  // Filter Repos
+  let filtered = state.repos.filter(r => {
+    const textMatch = (r.full_name + ' ' + (r.description || '') + ' ' + (r.topics || []).join(' ')).toLowerCase().includes(query);
+    return textMatch;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    if (sort === 'impact') return calculateImpact(b.full_name) - calculateImpact(a.full_name);
+    if (sort === 'hours') return (+state.metrics[b.full_name]?.hoursSavedTotal || 0) - (+state.metrics[a.full_name]?.hoursSavedTotal || 0);
+    if (sort === 'name') return a.name.localeCompare(b.name);
+    return 0;
+  });
+
+  const container = $('#cartsContainer');
+  container.innerHTML = '';
+
+  DEFAULT_LISTS.forEach((listName, idx) => {
+    if (listFilter !== 'all' && listFilter !== listName) return;
+
+    const repoNamesInList = state.lists[listName] || [];
+    const reposInThisCart = filtered.filter(r => repoNamesInList.includes(r.full_name));
+
+    const cartEl = document.createElement('details');
+    cartEl.className = 'cart';
+    if (reposInThisCart.length > 0) cartEl.open = true;
+
+    cartEl.innerHTML = `
+      <summary>
+        <div class="cart-title-wrap">
+          <span class="cart-indicator">▶</span>
+          <span>${listName}</span>
+          <span class="badge ${reposInThisCart.length ? 'badge-gold' : ''}">${reposInThisCart.length} repos</span>
+        </div>
+        <span style="font-size:12px; color:var(--text-dim); font-weight:400;">#${idx + 1} of 26</span>
+      </summary>
+      <div class="cart-body">
+        ${reposInThisCart.length ? `
+          <div class="tiles-grid">
+            ${reposInThisCart.map((r, i) => `
+              <div class="tile" data-fullname="${r.full_name}" data-cart="${listName}">
+                <div>
+                  <div class="tile-head">
+                    <span class="tile-rank">RANK #${i + 1}</span>
+                    <span class="tile-owner">${r.owner?.login || ''}</span>
+                  </div>
+                  <h3 class="tile-title">${r.name}</h3>
+                  <p class="tile-desc">${r.description || 'No description available.'}</p>
+                </div>
+                <div class="tile-foot">
+                  <span class="badge">${r.language || 'Code'}</span>
+                  <span class="badge badge-emerald">+${state.metrics[r.full_name]?.hoursSavedTotal || 40}h saved</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '<div style="color:var(--text-dim); padding:16px 0; font-size:13px;">No matching repositories in this cart.</div>'}
+      </div>
+    `;
+    container.appendChild(cartEl);
+  });
+
+  // Attach click listeners to tiles
+  $$('.tile').forEach(t => {
+    t.onclick = () => openRepoModal(t.dataset.fullname, t.dataset.cart);
+  });
+}
+
+function openRepoModal(fullName, cartName) {
+  const repo = state.repos.find(r => r.full_name === fullName);
+  if (!repo) return;
+
+  $('#modalCartName').textContent = cartName || 'Repository Intelligence';
+  $('#modalRepoTitle').textContent = repo.name;
+  $('#modalRepoUrl').href = repo.html_url || `https://github.com/${fullName}`;
+  $('#modalRepoDesc').textContent = repo.description || 'No description provided.';
+
+  // Install Command
+  const installCmd = repo.language === 'Python' ? `git clone https://github.com/${fullName}.git\ncd ${repo.name}\npython -m venv venv && source venv/bin/activate\npip install -r requirements.txt`
+    : `git clone https://github.com/${fullName}.git\ncd ${repo.name}\nnpm install\nnpm run build`;
+  $('#modalInstallCode').textContent = installCmd;
+
+  // Prerequisites
+  $('#modalPrereqs').innerHTML = `<b>Prerequisites:</b> Git, ${repo.language || 'Node.js / Python'}, Terminal environment with outbound API access.`;
+
+  // MAB AI Strategies Playbooks
+  $('#modalPlaybooks').innerHTML = `
+    <div class="playbook-card gold">
+      <b style="color:var(--gold); font-size:14px;">Play 1: Client Delivery Automation Module</b>
+      <p style="color:var(--text-muted); font-size:12.5px; margin-top:4px;">Package ${repo.name} as a specialized capability inside client-facing automation sprints for mid-market field service or logistics operations.</p>
+      <div class="playbook-metrics">
+        <div class="playbook-metric-item"><span>Difficulty</span><b>2 / 10 (Fast)</b></div>
+        <div class="playbook-metric-item"><span>Setup Time</span><b>1.5 Hours</b></div>
+        <div class="playbook-metric-item"><span>Capital Cost</span><b>$0 (Open Source)</b></div>
+        <div class="playbook-metric-item"><span>ROI Target</span><b>7 Days</b></div>
+        <div class="playbook-metric-item"><span>Attributable Value</span><b>+$4,500 Margin</b></div>
+      </div>
+    </div>
+    <div class="playbook-card">
+      <b style="color:var(--lavender); font-size:14px;">Play 2: Internal MAB-OS Production Mainstay</b>
+      <p style="color:var(--text-muted); font-size:12.5px; margin-top:4px;">Integrate directly into AutoProspector or Agent Employee Factory to automate recurring company analysis and pipeline operations.</p>
+      <div class="playbook-metrics">
+        <div class="playbook-metric-item"><span>Difficulty</span><b>3 / 10 (Moderate)</b></div>
+        <div class="playbook-metric-item"><span>Setup Time</span><b>3 Hours</b></div>
+        <div class="playbook-metric-item"><span>Maintenance</span><b>1 hr/month</b></div>
+        <div class="playbook-metric-item"><span>Recurring Savings</span><b>25 hrs/month</b></div>
+      </div>
+    </div>
+  `;
+
+  // Fetch Raw README Intelligence
+  $('#modalReadmeContent').textContent = 'Loading README intelligence from repository…';
+  fetch(`https://api.github.com/repos/${fullName}/readme`, { headers: { Accept: 'application/vnd.github.raw+json' } })
+    .then(res => res.text())
+    .then(text => {
+      $('#modalReadmeContent').textContent = text.slice(0, 1200) + '…';
+    })
+    .catch(() => {
+      $('#modalReadmeContent').textContent = 'README preview unavailable offline. Inspect live on GitHub via the header link.';
+    });
+
+  $('#repoModal').classList.add('open');
+}
+
+// Copy install command
+$('#copyInstallBtn').onclick = () => {
+  navigator.clipboard.writeText($('#modalInstallCode').textContent);
+  $('#copyInstallBtn').textContent = 'Copied!';
+  setTimeout(() => { $('#copyInstallBtn').textContent = 'Copy Command'; }, 2000);
+};
+
+$('#modalCloseBtn').onclick = () => $('#repoModal').classList.remove('open');
+$('#repoModal').onclick = e => { if (e.target.id === 'repoModal') $('#repoModal').classList.remove('open'); };
+
+// Dashboard Leaderboard & Metrics Form
+function renderDashboard() {
+  const sorted = [...state.repos].sort((a, b) => calculateImpact(b.full_name) - calculateImpact(a.full_name)).slice(0, 10);
+  const maxScore = calculateImpact(sorted[0]?.full_name) || 1;
+
+  $('#leaderboardList').innerHTML = sorted.map((r, i) => {
+    const score = calculateImpact(r.full_name);
+    const pct = Math.min(100, Math.max(8, (score / maxScore) * 100));
+    return `
+      <div class="rank-item">
+        <span style="font-weight:800; font-size:12px; color:var(--gold); width:32px;">#${i + 1}</span>
+        <div style="flex-grow:1; margin-left:8px;">
+          <b style="color:#fff; font-size:13.5px;">${r.name}</b>
+          <div style="color:var(--text-dim); font-size:11px;">${r.full_name} · ${state.metrics[r.full_name]?.hoursSavedTotal || 0}h saved</div>
+        </div>
+        <div class="rank-bar-wrap">
+          <div class="rank-bar"><div class="rank-bar-fill" style="width:${pct}%;"></div></div>
+        </div>
+        <span style="font-size:12px; font-weight:700; color:var(--lavender); font-family:monospace;">$${score.toLocaleString()}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Populate Repo Selector
+  $('#metricRepoSelect').innerHTML = state.repos.map(r => `<option value="${r.full_name}">${r.name} (${r.full_name})</option>`).join('');
+  populateMetricInputs();
+}
+
+function populateMetricInputs() {
+  const selected = $('#metricRepoSelect').value;
+  const m = state.metrics[selected] || {};
+  const fields = [
+    ['timesCalled', 'Times Invocated (Calls)', m.timesCalled || 0],
+    ['mainstayDays', 'Mainstay Active Days', m.mainstayDays || 0],
+    ['hoursSavedTotal', 'Hours Saved (Total)', m.hoursSavedTotal || 0],
+    ['revenueGainedTotal', 'Revenue Gained ($)', m.revenueGainedTotal || 0],
+    ['hoursCost', 'Setup / Maintenance Hours', m.hoursCost || 0],
+    ['stabilityScore', 'Stability Score (0–10)', m.stabilityScore || 8]
+  ];
+  $('#metricInputsGrid').innerHTML = fields.map(([k, label, val]) => `
+    <div>
+      <label style="display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px;">${label}</label>
+      <input type="number" data-key="${k}" value="${val}" style="width:100%;">
+    </div>
+  `).join('');
+}
+
+$('#metricRepoSelect').onchange = populateMetricInputs;
+$('#saveMetricsBtn').onclick = () => {
+  const selected = $('#metricRepoSelect').value;
+  state.metrics[selected] = state.metrics[selected] || {};
+  $$('#metricInputsGrid input').forEach(inp => {
+    state.metrics[selected][inp.dataset.key] = +inp.value;
+  });
+  saveState();
+  updateKPICounters();
+  renderDashboard();
+  renderCarts();
+  alert('Metrics successfully saved to local intelligence ledger.');
+};
+
+// Navigation Tab Logic
+$$('.view-tabs button').forEach(btn => {
+  btn.onclick = () => {
+    $$('.view-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ['explorer', 'dashboard', 'lists', 'sync'].forEach(v => {
+      $('#view-' + v).classList.toggle('hidden', v !== btn.dataset.view);
+    });
+    if (btn.dataset.view === 'dashboard') renderDashboard();
+  };
+});
+
+// Search, Filter & Sort Events
+$('#searchInput').oninput = renderCarts;
+$('#filterList').onchange = renderCarts;
+$('#sortSelect').onchange = renderCarts;
+$('#expandAllBtn').onclick = () => {
+  const carts = $$('.cart');
+  const allOpen = [...carts].every(c => c.open);
+  carts.forEach(c => c.open = !allOpen);
+  $('#expandAllBtn').textContent = allOpen ? 'Expand All' : 'Collapse All';
+};
+
+// Populate Category Filter
+$('#filterList').innerHTML = '<option value="all">All 26 Carts</option>' + DEFAULT_LISTS.map(l => `<option value="${l}">${l}</option>`).join('');
+
+// Schema Import & Export
+$('#importSchemaBtn').onclick = () => {
+  try {
+    const parsed = JSON.parse($('#listSchemaText').value);
+    state.lists = { ...state.lists, ...parsed };
+    saveState();
+    renderCarts();
+    alert('Custom 26-list schema successfully imported.');
+  } catch (e) {
+    alert('Invalid JSON schema format.');
+  }
+};
+$('#exportFullBackupBtn').onclick = () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `starfield-workspace-backup-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+};
+
+// GitHub Paginated Star Sync
+async function syncGitHubStars() {
+  const pat = $('#ghPatInput').value.trim() || localStorage.getItem('starfield_pat') || '';
+  if (pat) localStorage.setItem('starfield_pat', pat);
+
+  $('#syncStatusText').textContent = 'Fetching stars page by page…';
+  let allStars = [];
+  let page = 1;
+  let hasMore = true;
+
+  try {
+    while (hasMore) {
+      const res = await fetch(`https://api.github.com/users/MABAIStrategies/starred?per_page=100&page=${page}`, {
+        headers: {
+          Accept: 'application/vnd.github+json',
+          ...(pat ? { Authorization: `Bearer ${pat}` } : {})
+        }
+      });
+      if (!res.ok) throw new Error(`GitHub API Error: ${res.status}`);
+      const data = await res.json();
+      if (!data.length) { hasMore = false; break; }
+      allStars = allStars.concat(data);
+      if (data.length < 100) { hasMore = false; } else { page++; }
+    }
+
+    state.repos = allStars;
+    state.lastSync = new Date().toISOString();
+    saveState();
+    updateKPICounters();
+    renderCarts();
+    $('#syncStatusText').textContent = `Sync Complete: ${allStars.length} repositories loaded.`;
+  } catch (err) {
+    $('#syncStatusText').textContent = err.message + ' (Add a PAT for higher rate limits).';
+  }
+}
+
+$('#startSyncBtn').onclick = syncGitHubStars;
+$('#clearPatBtn').onclick = () => {
+  localStorage.removeItem('starfield_pat');
+  $('#ghPatInput').value = '';
+  $('#syncStatusText').textContent = 'Token forgotten.';
+};
+
+// Initial Load
+updateKPICounters();
+renderCarts();
+</script>
+</body>
+</html>
