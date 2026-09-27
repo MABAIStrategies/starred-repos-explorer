@@ -1,0 +1,9 @@
+{
+    "name": "starred-repos-explorer",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Starfield — MAB AI Strategies starred-repos explorer and impact dashboard, backed by Neon Postgres.",
+    "dependencies": {
+          "@neondatabase/serverless": "^1.1.0"
+    }
+}
