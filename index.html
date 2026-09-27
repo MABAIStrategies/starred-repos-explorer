@@ -362,7 +362,7 @@ button:hover {
     <div class="kpi-card">
       <div class="kpi-label">Repositories Indexed</div>
       <div class="kpi-value" id="kpiTotalRepos">0</div>
-      <div class="kpi-sub" id="kpiSyncStatus">Sync: Standalone Mode</div>
+      <div class="kpi-sub" id="kpiSyncStatus">Sync: Connecting to Neon…</div>
     </div>
   </section>
 
@@ -402,7 +402,7 @@ button:hover {
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" id="metricInputsGrid">
             <!-- Dynamically populated fields -->
           </div>
-          <button class="btn-gold" id="saveMetricsBtn" style="margin-top:16px; width:100%; justify-content:center;">Save Metrics to Local Ledger</button>
+          <button class="btn-gold" id="saveMetricsBtn" style="margin-top:16px; width:100%; justify-content:center;">Save Metrics to Ledger</button>
         </div>
       </div>
     </div>
@@ -555,30 +555,70 @@ const SEED_REPOS = [
   }
 ];
 
-// Initialize State
-let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || {
-  repos: SEED_REPOS,
-  lists: Object.fromEntries(DEFAULT_LISTS.map(l => [l, []])),
-  metrics: {
-    'anthropics/claude-code': { timesCalled: 240, mainstayDays: 85, clientProjectsCount: 12, hoursSavedTotal: 380, revenueGainedTotal: 45000, hoursCost: 15, stabilityScore: 9 },
-    'n8n-io/n8n': { timesCalled: 650, mainstayDays: 140, clientProjectsCount: 18, hoursSavedTotal: 520, revenueGainedTotal: 68000, hoursCost: 20, stabilityScore: 10 },
-    'browser-use/browser-use': { timesCalled: 110, mainstayDays: 45, clientProjectsCount: 6, hoursSavedTotal: 190, revenueGainedTotal: 28000, hoursCost: 12, stabilityScore: 8 }
-  },
-  lastSync: null
-};
-
-// Auto-populate seed repos into default lists if empty
-if (Object.values(state.lists).every(arr => arr.length === 0)) {
-  state.lists['Coding Agents & SWE'].push('anthropics/claude-code', 'openai/codex');
-  state.lists['Workflow & n8n Automation'].push('n8n-io/n8n');
-  state.lists['Browser Automation & Scraping'].push('browser-use/browser-use', 'camofox-browser/camofox');
-  state.lists['AI Agents & Orchestration'].push('google/adk-python');
-  state.lists['Computer Vision & Multimodal'].push('abi/screenshot-to-code');
-  state.lists['Model Optimization & Fine-Tuning'].push('NVIDIA/Model-Optimizer');
-  state.lists['Google Workspace Automation'].push('dream-num/univer');
+// Initialize State — persisted server-side in Neon via /api/state (see api/state.js).
+// Data lives in Postgres now, not localStorage, so every device/browser sees the same repos/lists/metrics.
+function buildDefaultState() {
+  const s = {
+    repos: SEED_REPOS,
+    lists: Object.fromEntries(DEFAULT_LISTS.map(l => [l, []])),
+    metrics: {
+      'anthropics/claude-code': { timesCalled: 240, mainstayDays: 85, clientProjectsCount: 12, hoursSavedTotal: 380, revenueGainedTotal: 45000, hoursCost: 15, stabilityScore: 9 },
+      'n8n-io/n8n': { timesCalled: 650, mainstayDays: 140, clientProjectsCount: 18, hoursSavedTotal: 520, revenueGainedTotal: 68000, hoursCost: 20, stabilityScore: 10 },
+      'browser-use/browser-use': { timesCalled: 110, mainstayDays: 45, clientProjectsCount: 6, hoursSavedTotal: 190, revenueGainedTotal: 28000, hoursCost: 12, stabilityScore: 8 }
+    },
+    lastSync: null
+  };
+  // Auto-populate seed repos into default lists
+  s.lists['Coding Agents & SWE'].push('anthropics/claude-code', 'openai/codex');
+  s.lists['Workflow & n8n Automation'].push('n8n-io/n8n');
+  s.lists['Browser Automation & Scraping'].push('browser-use/browser-use', 'camofox-browser/camofox');
+  s.lists['AI Agents & Orchestration'].push('google/adk-python');
+  s.lists['Computer Vision & Multimodal'].push('abi/screenshot-to-code');
+  s.lists['Model Optimization & Fine-Tuning'].push('NVIDIA/Model-Optimizer');
+  s.lists['Google Workspace Automation'].push('dream-num/univer');
+  return s;
 }
 
-function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+let state = buildDefaultState();
+let dbReachable = false; // safe default: assume offline until a successful load proves otherwise
+
+async function loadState() {
+  try {
+    const res = await fetch('/api/state');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const remote = await res.json();
+    if (remote && typeof remote === 'object' && Array.isArray(remote.repos)) {
+      state = remote;
+    } else {
+      // Neon table exists but is empty — seed it with the defaults so future loads have data.
+      await saveState();
+    }
+    dbReachable = true;
+  } catch (err) {
+    console.warn('Starfield: could not reach the Neon-backed API, running on local defaults only.', err);
+    dbReachable = false;
+  }
+  const statusEl = $('#kpiSyncStatus');
+  if (statusEl) {
+    statusEl.textContent = dbReachable
+      ? ('Sync: Live (Neon)' + (state.lastSync ? ' · GitHub sync ' + new Date(state.lastSync).toLocaleDateString() : ''))
+      : 'Sync: Offline (using local defaults — Neon unreachable)';
+  }
+}
+
+function saveState() {
+  return fetch('/api/state', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(state)
+  }).then(res => {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    dbReachable = true;
+  }).catch(err => {
+    dbReachable = false;
+    console.warn('Starfield: save to Neon failed, this change is local only until the API is reachable again.', err);
+  });
+}
 
 // Scoring Engine
 function calculateImpact(fullName) {
@@ -806,7 +846,7 @@ $('#saveMetricsBtn').onclick = () => {
   updateKPICounters();
   renderDashboard();
   renderCarts();
-  alert('Metrics successfully saved to local intelligence ledger.');
+  alert('Metrics saved' + (dbReachable ? ' to Neon.' : ' locally — Neon is unreachable, changes will not persist across devices until it is back.'));
 };
 
 // Navigation Tab Logic
@@ -882,10 +922,10 @@ async function syncGitHubStars() {
 
     state.repos = allStars;
     state.lastSync = new Date().toISOString();
-    saveState();
+    await saveState();
     updateKPICounters();
     renderCarts();
-    $('#syncStatusText').textContent = `Sync Complete: ${allStars.length} repositories loaded.`;
+    $('#syncStatusText').textContent = `Sync Complete: ${allStars.length} repositories loaded` + (dbReachable ? ' and saved to Neon.' : ' (Neon save failed — local only).');
   } catch (err) {
     $('#syncStatusText').textContent = err.message + ' (Add a PAT for higher rate limits).';
   }
@@ -898,9 +938,16 @@ $('#clearPatBtn').onclick = () => {
   $('#syncStatusText').textContent = 'Token forgotten.';
 };
 
-// Initial Load
+// Initial Load — render immediately from defaults so the page never looks broken,
+// then reconcile with Neon and re-render once the real data is in.
 updateKPICounters();
 renderCarts();
+(async () => {
+  await loadState();
+  updateKPICounters();
+  renderCarts();
+  if (!$('#view-dashboard').classList.contains('hidden')) renderDashboard();
+})();
 </script>
 </body>
 </html>
